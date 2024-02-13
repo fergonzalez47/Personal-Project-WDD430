@@ -26,6 +26,17 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+#personimg {
+  background-image: url("/hero2.jpg");
+  background-image: no-repeat;
+  background-image: fixed;
+  background-image: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

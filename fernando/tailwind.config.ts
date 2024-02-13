@@ -15,6 +15,33 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui"), require('@tailwindcss/forms'),],
+
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+
+          "primary": "#22d3ee",
+
+          "secondary": "#84cc16",
+
+          "accent": "#991b1b",
+
+          "neutral": "#991b1b",
+
+          "base-100": "#fffff8",
+
+          "info": "#fecaca",
+
+          "success": "#00f2bf",
+
+          "warning": "#ffb400",
+
+          "error": "#fc0047",
+        },
+      },
+    ],
+  },
 };
 export default config;
