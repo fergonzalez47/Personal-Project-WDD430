@@ -14,7 +14,6 @@ export default function Hero() {
       <div className="glass p-4 rounded-lg shadow-2xl">
         <h1 className="text-7xl font-bold ">Biunatu App</h1>
         <p className="py-6">
-          {" "}
           "Biunatu is a haven for nature enthusiasts and adventurers alike,
           offering a platform to share captivating photos, inspiring stories,
           and thrilling trekking experiences. Whether you're passionate about
