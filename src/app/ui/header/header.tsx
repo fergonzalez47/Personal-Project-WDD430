@@ -1,15 +1,45 @@
 import Link from "next/link";
-import Image from "next/image";
-
-export default function Header() {
+import NavLinks from "./nav-links";
+import { signOut } from "next-auth/react";
+export default async function Header() {
   return (
-    <header className="bg-p-orange">
-      <nav className="navbar justify-between secondary-orange">
-        <Link className="btn btn-ghost bg-base-300 text-lg" href="/">
-          Handcrafted Haven
+    <div className="navbar bg-primary m">
+      <div className="flex-1">
+        <Link href={"/home"} className="btn btn-ghost text-2xl">
+          Biunatu
         </Link>
-        
-      </nav>
-    </header>
+      </div>
+      <div className="flex-none mr-5">
+        <ul className="menu menu-horizontal px-1">
+          <NavLinks />
+          <li>
+            <details>
+              <summary className="justify-center gap-2 rounded-md p-3 text-lg font-medium  hover:text-secondary md:flex-none md:justify-start md:p-2 md:px-3">
+                More
+              </summary>
+              <ul className="p-2 bg-primary rounded-t-none">
+                <li>
+                  <a>Dashboard</a>
+                </li>
+                <li>
+                  <form
+                    className=""
+                    action={async () => {
+                      "use server";
+                      await signOut();
+                    }}
+                  >
+                    <button>
+                      <p className="hidden md:block">Sing Out</p>
+                    </button>
+                  </form>
+                </li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }
+

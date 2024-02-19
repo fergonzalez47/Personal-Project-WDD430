@@ -22,23 +22,23 @@ const config: Config = {
       {
         mytheme: {
 
-          "primary": "#22d3ee",
+          "primary": "#34d399",
 
-          "secondary": "#84cc16",
+          "secondary": "#fbbf24",
 
-          "accent": "#991b1b",
+          "accent": "#d6d3d1",
 
-          "neutral": "#991b1b",
+          "neutral": "#292924",
 
-          "base-100": "#fffff8",
+          "base-100": "#fffdff",
 
-          "info": "#fecaca",
+          "info": "#00e4ff",
 
-          "success": "#00f2bf",
+          "success": "#008100",
 
-          "warning": "#ffb400",
+          "warning": "#ffc500",
 
-          "error": "#fc0047",
+          "error": "#c71e4e",
         },
       },
     ],

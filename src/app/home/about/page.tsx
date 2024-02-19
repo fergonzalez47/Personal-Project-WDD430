@@ -4,6 +4,6 @@ import { Metadata } from "next";
 //   title: "Home",
 // };
 
-export default function Home() {
-  return <h2>HOME PAGEeeeee</h2>;
+export default function About() {
+  return <h2>About PAGEeeeee</h2>;
 }

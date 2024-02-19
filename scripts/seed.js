@@ -1,6 +1,6 @@
 const { db } = require('@vercel/postgres');
 
-const { users, items, comments } = require('../app/lib/placeholder-data.js')
+const { users, routes } = require("./placeholder-data.js")
 //FIRST, FOLLOW THE STEPS IN CHAPTER 6 OF THE TUTORIAL, AND BEFORE SEED THE DATABASE IN TE THERMINAL NEED
 //TO BE TYPED : " npm i @vercel/postgres "
 
@@ -15,13 +15,15 @@ async function seedUserTable(client) {
         const createTable = await client.sql`
       CREATE TABLE IF NOT EXISTS users_ (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        googleId VARCHAR(255) NULL,
         email VARCHAR(255) NOT NULL unique,
         role VARCHAR(20) NOT NULL,
         password VARCHAR(255) NOT NULL,
-        name varchar(255) not null,
+        fname varchar(255) NOT NULL,
+        lname varchar(255) NOT NULL,
         image_url varchar(500) null,
         phone VARCHAR(20) NULL,
-        history varchar(512) null
+        description varchar(512) null
       );
     `;
 
@@ -31,8 +33,8 @@ async function seedUserTable(client) {
             users.map(async (user) => {
                 const hashedPassword = await bcrypt.hash(user.password, 10);
                 return client.sql`
-              INSERT INTO users_ (id, email, role, password, name, phone, image_url)
-              VALUES (${user.id}, ${user.email}, ${user.role}, ${hashedPassword}, ${user.name}, ${user.image_url}, ${user.phone})
+              INSERT INTO users_ (id, email, role, password, fname, lname, image_url, phone, description)
+              VALUES (${user.id}, ${user.email}, ${user.role}, ${hashedPassword}, ${user.fname}, ${user.lname}, ${user.image_url}, ${user.phone}, ${user.description})
               ON CONFLICT (id) DO NOTHING;
             `;
             }),
@@ -49,36 +51,36 @@ async function seedUserTable(client) {
     }
 }
 
-async function seedItemTable(client) {
+async function seedRouteTable(client) {
     try {
         await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
         const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS items (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        category VARCHAR(45) NOT NULL,
-        description VARCHAR(2000) NULL,
-        price DECIMAL(10,2) NOT NULL,
-        image_url VARCHAR(255) NULL,
-        published BOOLEAN NOT NULL,
-        artisan_id UUID NOT NULL);
-    `;
+            CREATE TABLE IF NOT EXISTS routes (
+                id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+                name VARCHAR(255) NOT NULL,
+                difficunty VARCHAR(45) NOT NULL,
+                country VARCHAR(60) NOT NULL,
+                description VARCHAR(2000) NULL,
+                distance INT NOT NULL,
+                image_url VARCHAR(255) NULL,
+                created_by UUID NOT NULL,
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )
+        `;
 
-        console.log('Table "items" created');
+        console.log('Tabla "routes" creada');
 
-        // Insert data into the "item" table
-        const insertedItems = await Promise.all(
-            items.map(
-                (item) => client.sql`
-          INSERT INTO items (id, name, category, description, price, image_url, published, artisan_id)
-          VALUES (${item.id}, ${item.name},${item.category}, ${item.description}, ${item.price}, ${item.image_url},${item.published},${item.artisan_id})
-          ON CONFLICT (id) DO NOTHING;
-        `,
+        const insertedRoutes = await Promise.all(
+            routes.map(
+                (route) => client.sql`
+                    INSERT INTO routes (name, difficunty, country, description, distance, image_url, created_by)
+                    VALUES (${route.name}, ${route.difficunty}, ${route.country}, ${route.description}, ${route.distance}, ${route.image_url}, ${route.created_by})
+                    ON CONFLICT (id) DO NOTHING;
+                `
             ),
         );
-
-        console.log(`Seeded ${insertedItems.length} item`);
+        console.log(`Seeded ${insertedRoutes.length} routes`);
 
         return {
             createTable
@@ -99,24 +101,24 @@ async function seedCommentsTable(client) {
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         comment varchar(255) NULL,
         rate INTEGER NOT NULL,
-        item_id uuid not null,
-        user_id uuid not null
+        route_id uuid NOT NULL,
+        user_id uuid NOT NULL
       );
     `;
 
-        console.log('Table "comments" created');
-        // Insert data into the "item" table
-        const insertedComments = await Promise.all(
-            comments.map(
-                (comment) => client.sql`
-              INSERT INTO comments (id, comment, rate, item_id, user_id)
-              VALUES (${comment.id}, ${comment.comment},${comment.rate}, ${comment.item_id}, ${comment.user_id})
-              ON CONFLICT (id) DO NOTHING;
-            `,
-            ),
-        );
+        // console.log('Table "comments" created');
+        // // Insert data into the "item" table
+        // const insertedComments = await Promise.all(
+        //     comments.map(
+        //         (comment) => client.sql`
+        //       INSERT INTO comments (id, comment, rate, item_id, user_id)
+        //       VALUES (${comment.id}, ${comment.comment},${comment.rate}, ${comment.item_id}, ${comment.user_id})
+        //       ON CONFLICT (id) DO NOTHING;
+        //     `,
+        //     ),
+        // );
 
-        console.log(`Seeded ${insertedComments.length} comments`);
+        // console.log(`Seeded ${insertedComments.length} comments`);
 
         return {
             createTable
@@ -131,7 +133,7 @@ async function main() {
     const client = await db.connect();
 
     await seedUserTable(client);
-    await seedItemTable(client);
+    await seedRouteTable(client);
     await seedCommentsTable(client);
 
     await client.end();
