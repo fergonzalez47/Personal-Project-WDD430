@@ -19,11 +19,11 @@ async function seedUserTable(client) {
         email VARCHAR(255) NOT NULL unique,
         role VARCHAR(20) NOT NULL,
         password VARCHAR(255) NOT NULL,
-        fname varchar(255) NOT NULL,
-        lname varchar(255) NOT NULL,
-        image_url varchar(500) null,
+        fname VARCHAR(255) NOT NULL,
+        lname VARCHAR(255) NOT NULL,
+        image_url VARCHAR(500) NULL,
         phone VARCHAR(20) NULL,
-        description varchar(512) null
+        description VARCHAR(510) NULL
       );
     `;
 

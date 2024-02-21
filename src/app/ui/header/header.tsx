@@ -14,10 +14,10 @@ export default async function Header() {
           <NavLinks />
           <li>
             <details>
-              <summary className="justify-center gap-2 rounded-md p-3 text-lg font-medium  hover:text-secondary md:flex-none md:justify-start md:p-2 md:px-3">
+              <summary className="justify-center gap-2 rounded-md px-3 text-lg font-medium  hover:text-secondary md:flex-none md:justify-start md:p-2 md:px-3">
                 More
               </summary>
-              <ul className="p-2 bg-primary rounded-t-none">
+              <ul className="px-2 bg-primary rounded-t-none">
                 <li>
                   <a>Dashboard</a>
                 </li>

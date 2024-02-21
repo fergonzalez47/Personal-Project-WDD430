@@ -1,9 +1,28 @@
-import { Metadata } from "next";
+import ExplorerContainer from "@/app/ui/explorers/explorer-display";
+import Pagination from "@/app/ui/home/pagination";
+import { fetchUsersPages } from "@/app/lib/data";
+import Search from "@/app/ui/home/search";
 
-// export const metadata: Metadata = {
-//   title: "Home",
-// };
+export default async function Explorers({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
+  const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
 
-export default function Explorers() {
-  return <h2>Explorers PAGEeeeee</h2>;
+  const totalPages = await fetchUsersPages(query);
+
+
+  return (
+    <div className="bg-white py-24 sm:py-32">
+      <Search placeholder="Search user..." />
+      {/* Sekeleton here */}
+      <ExplorerContainer currentPage={currentPage} query={query} />
+      <Pagination totalPages={totalPages} />
+    </div>
+  );
 }
