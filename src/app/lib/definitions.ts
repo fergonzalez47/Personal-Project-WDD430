@@ -40,3 +40,16 @@ export type Users_ = {
     phone: string
     description: string
 };
+
+export type User = {
+    id: string
+    googleId: string
+    email: string
+    role: string
+    password: string
+    fname: string
+    lname: string
+    image_url: string
+    phone: string
+    description: string
+};

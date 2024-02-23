@@ -1,6 +1,6 @@
 import Link from "next/link";
 import NavLinks from "./nav-links";
-import { signOut } from "next-auth/react";
+import { signOut } from "../../../../auth";
 export default async function Header() {
   return (
     <div className="navbar bg-primary m">
@@ -19,7 +19,7 @@ export default async function Header() {
               </summary>
               <ul className="px-2 bg-primary rounded-t-none">
                 <li>
-                  <a>Dashboard</a>
+                  <Link href={"/home/dashboard"}>Dashboard</Link>
                 </li>
                 <li>
                   <form
